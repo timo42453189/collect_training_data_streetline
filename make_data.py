@@ -1,6 +1,5 @@
 from data_storing.store_data import StoreData
 import cv2
-import sys
 import os
 
 s = StoreData()
@@ -39,7 +38,7 @@ class DrawLineWidget(object):
             if self.count == 2:
                 s.store_automatic(self.original_image,[[self.image_coordinates[0], self.image_coordinates[1]], [self.image_coordinates[2], self.image_coordinates[3]]], "labled_images")
                 cv2.destroyAllWindows()
-                return
+                return 0
         # Clear drawing boxes on right mouse button click
         elif event == cv2.EVENT_RBUTTONDOWN:
             self.clone = self.original_image.copy()
@@ -52,7 +51,10 @@ def run(image_name):
     draw_line_widget = DrawLineWidget(image_name)
     cv2.imshow('image', draw_line_widget.show_image())
     cv2.moveWindow('image', 800, 300)
-    cv2.waitKey(0)
+    key = cv2.waitKey(0)
+    if key & 0xFF == ord("q"):
+        cv2.destroyAllWindows()
+        exit()
     
 def get_number(filename):
     return int(filename.split('.')[0])

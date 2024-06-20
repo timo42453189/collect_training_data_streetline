@@ -6,7 +6,7 @@ s = StoreData()
 c = Cam(index=[])
 
 
-image_name = "8.h5"
+image_name = "4.h5"
 
 image, _ = s.read(image_name)
 median_blur = cv2.medianBlur(image, 5)
