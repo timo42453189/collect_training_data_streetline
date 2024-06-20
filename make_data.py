@@ -59,9 +59,21 @@ def run(image_name):
 def get_number(filename):
     return int(filename.split('.')[0])
 
+def insert_filename(filename):
+    with open("filelist.txt", "a") as f:
+        f.write(filename + '\n')
+
+def read_filename():
+    with open("filelist.txt", "r") as f:
+        names = f.readlines()
+    return [n.strip() for n in names]
+    
+
+        
+
 images = os.listdir("data_storing/database")
 images = sorted(images, key=get_number)
-images_done = os.listdir("data_storing/labled_images")
+images_done = read_filename()
 overlapping_names = set(images) & set(images_done)
 images = [x for x in images if x not in overlapping_names]
 print(images)
@@ -69,5 +81,6 @@ images_left = len(images)
 for i in images:
     print(i)
     print("Images left: ", images_left)
+    insert_filename(i)
     images_left -= 1
     run(i)
