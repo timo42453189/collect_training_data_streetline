@@ -12,7 +12,7 @@ class StoreData:
             f.create_dataset('potentiometer', data=potentiometer)
     
     def store_automatic(self, image, potentiometer, directory):
-        filename = str(len(os.listdir(f"{os.getcwd()}/data_storing/{directory}")) + 1)
+        filename = str(len(os.listdir(f"{os.getcwd()}/data_storing/{directory}")))
         with h5py.File(f"{os.getcwd()}/data_storing/{directory}/{filename}.h5", 'w') as f:
             f.create_dataset('image', data=image)
             f.create_dataset('potentiometer', data=potentiometer)
