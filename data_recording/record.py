@@ -1,6 +1,7 @@
 from camera.camera import Cam
 from data_storing.store_data import StoreData
 import serial
+from xbox_controller import XboxController
 
 class Record:
     def __init__(self, index = [0]):
@@ -10,11 +11,13 @@ class Record:
         self.ser = serial.Serial(
         port='COM7',
         baudrate = 9600)
+        self.xbox = XboxController()
 
 
-    def getPotValue(self):
+    def sendSteerValue(self):
         self.ser.reset_input_buffer()
-        return self.ser.readline().decode().rstrip()
+        self.ser.write(str(self.xbox.read()).encode())
+
     
     def record_data(self):
         if self.cams_used == 2:
@@ -25,5 +28,5 @@ class Record:
         
         # Pot is irrelevant at this time
         pot = 10
-        print(pot)
+        self.sendSteerValue()
         self.s.store_automatic(frame, pot, "database")
